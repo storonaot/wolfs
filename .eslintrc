@@ -1,0 +1,104 @@
+{
+  "root": true,
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["import", "react", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "@vkontakte/eslint-config/react",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "env": {
+    "node": true,
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "rules": {
+    "import/no-named-as-default": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "no-shadow": ["error", { "hoist": "functions" }],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "*", "next": ["return", "block-like"] },
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": ["multiline-const", "multiline-let", "multiline-var", "multiline-expression"]
+      },
+      {
+        "blankLine": "always",
+        "prev": ["multiline-const", "multiline-let", "multiline-var", "multiline-expression"],
+        "next": "*"
+      },
+      { "blankLine": "always", "prev": "import", "next": "*" },
+      { "blankLine": "any", "prev": "import", "next": "import" },
+      { "blankLine": "always", "prev": "export", "next": "*" },
+      { "blankLine": "any", "prev": "export", "next": "export" }
+    ],
+    "sort-imports": ["error", { "ignoreMemberSort": false, "ignoreDeclarationSort": true }],
+    "react/jsx-props-no-spreading": ["error", { "html": "ignore" }],
+    "react/prop-types": "off",
+    "import/first": "error",
+    "import/no-amd": "error",
+    "import/no-anonymous-default-export": [
+      "warn",
+      {
+        "allowCallExpression": true,
+        "allowObject": true
+      }
+    ],
+    "import/no-webpack-loader-syntax": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ]
+  },
+  "settings": {
+    "import/internal-regex": "^@ecomm-b2b-web"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "ecmaFeatures": {
+          "jsx": true
+        },
+        "project": "./tsconfig.base.json"
+      },
+      "extends": [
+        "plugin:react-hooks/recommended",
+        "plugin:prettier/recommended",
+        "prettier/react"
+      ],
+      "rules": {
+        "no-constant-condition": "off",
+        "no-dupe-class-members": "off"
+      }
+    },
+    {
+      "files": ["**/*.config.js", "**/.storybook/*.js"],
+      "env": {
+        "browser": false,
+        "jest": false,
+        "node": true
+      }
+    }
+  ]
+}
