@@ -18,7 +18,7 @@ import {
 } from '@vkontakte/icons'
 
 import { AppContext } from './context'
-import { ProfilePanel, SkyPanel } from './panels'
+import { BuyPanel, ProfilePanel, SkyPanel } from './panels'
 // import { signIn } from './api'
 import { Modals } from './common/Modals'
 
@@ -84,7 +84,7 @@ const App = () => {
     {
       epicIcon: <Icon28MoneyRequestOutline fill="#4BB34B" />,
       name: 'buy',
-      panel: <SkyPanel id="wtf" title="wtf" />,
+      panel: <BuyPanel id="buy" />,
       title: 'Купить',
     },
     {
