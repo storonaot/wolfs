@@ -11,13 +11,16 @@ import {
   View,
 } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
-import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from '@vkontakte/icons'
+import {
+  Icon28MoneyRequestOutline,
+  Icon28MoneySendOutline,
+  Icon28UsersOutline,
+} from '@vkontakte/icons'
 
 import { AppContext } from './context'
 import { BuyPanel, ProfilePanel, SkyPanel } from './panels'
 // import { signIn } from './api'
 import { Modals } from './common/Modals'
-import { BidList } from './panels/BidList'
 
 const App = () => {
   const [activePanel, setActivePanel] = useState({ key: 'profile', props: {} })
@@ -79,10 +82,10 @@ const App = () => {
 
   const PAGES = [
     {
-      epicIcon: <Icon28LinkCircleOutline />,
-      name: 'buyPanel',
-      panel: <BuyPanel id="buyPanel" />,
-      title: 'wtf',
+      epicIcon: <Icon28MoneyRequestOutline fill="#4BB34B" />,
+      name: 'buy',
+      panel: <SkyPanel id="wtf" title="wtf" />,
+      title: 'Купить',
     },
     {
       epicIcon: <Icon28UsersOutline />,
@@ -91,23 +94,16 @@ const App = () => {
       title: 'Профиль',
     },
     {
-      epicIcon: <Icon28LogoVkOutline />,
-      name: 'sky',
+      epicIcon: <Icon28MoneySendOutline fill="#E64646" />,
+      name: 'sell',
       panel: <SkyPanel id="sky" title="/sky" />,
-      title: '/sky',
-    },
-    {
-      epicIcon: <Icon28UsersOutline />,
-      name: 'bidList',
-      panel: <BidList id="bidList" title="/sky" />,
+      title: 'Продать',
     },
   ]
 
   const tabbar = (
     <Tabbar>
       {PAGES.map(page => {
-        if (page.name === 'bidList') return
-
         return (
           <TabbarItem
             key={page.name}
