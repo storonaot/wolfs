@@ -1,55 +1,71 @@
-import React from 'react'
-import { Avatar, CellButton, ContentCard, Group, Panel, SimpleCell } from '@vkontakte/vkui'
+import React, { useCallback } from 'react'
+import { Group, Header, Panel, Separator, SimpleCell } from '@vkontakte/vkui'
 import {
-  Icon28ArrowLeftOutline,
-  Icon28ArrowRightOutline,
-  Icon28CoinsOutline,
+  Icon12ArrowDownLeft,
+  Icon12ArrowUpRight,
+  Icon24MoreHorizontal,
+  Icon28PaymentCardOutline,
+  Icon28WalletOutline,
 } from '@vkontakte/icons'
+
+import PanelHeader from '../../common/PanelHeader'
+import { BID_TYPE } from '../../constants'
 
 import s from './styles.module.scss'
 
-const mock = {
-  name: 'Кабанов Александр',
-  coinsCount: '123',
-  price: '15.32',
-}
+const transactions = [
+  { id: '1', type: BID_TYPE.buy, count: 120, declined: false, sum: '+265,24 ₽' },
+  { id: '2', type: BID_TYPE.sell, count: 120, declined: true, sum: '+0,00 ₽' },
+]
 
 const Profile = ({ id, user, title }) => {
+  const renderHhh = useCallback((transactionType, declined) => {
+    return (
+      <div>
+        {transactionType === BID_TYPE.sell ? 'Продажа' : 'Покупка'}{' '}
+        {declined && (
+          <>
+            <span> · </span>
+            <span className={s.declined}>Отменено</span>
+          </>
+        )}
+      </div>
+    )
+  }, [])
+
   return (
     <Panel id={id}>
-      <ContentCard
-        src="https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-        header={mock.name}
-        text={
-          <Group>
+      <PanelHeader>{title}</PanelHeader>
+      <Separator />
+      <Group mode="plain" header={<Header>Баланс</Header>}>
+        <SimpleCell disabled before={<Icon28WalletOutline />} indicator="1 200 баллов">
+          /sky
+        </SimpleCell>
+        <SimpleCell before={<Icon28PaymentCardOutline />} indicator="146 койнов">
+          sys
+        </SimpleCell>
+      </Group>
+      <Group mode="plain" header={<Header>Заявки</Header>}>
+        {transactions.map(transaction => {
+          return (
             <SimpleCell
-              before={<Icon28CoinsOutline />}
-              indicator={`${mock.price} ₽`}
-            >{`${mock.coinsCount} шт.`}</SimpleCell>
-            <div className={s.grid}>
-              <CellButton
-                before={
-                  <Avatar>
-                    <Icon28ArrowLeftOutline />
-                  </Avatar>
-                }
-                size="l"
-                mode="outline"
-              />
-              <CellButton
-                after={
-                  <Avatar>
-                    <Icon28ArrowRightOutline />
-                  </Avatar>
-                }
-                size="l"
-                mode="outline"
-              />
-            </div>
-          </Group>
-        }
-        maxHeight={700}
-      />
+              key={transaction.id}
+              description={`${transaction.count} коинов sky`}
+              indicator={transaction.sum}
+              after={<Icon24MoreHorizontal />}
+              before={
+                transaction.type === BID_TYPE.sell ? (
+                  <Icon12ArrowUpRight width={28} height={28} fill="#E64646" />
+                ) : (
+                  <Icon12ArrowDownLeft width={28} height={28} fill="#4BB34B" />
+                )
+              }
+            >
+              {renderHhh(transaction.type, transaction.declined)}
+            </SimpleCell>
+          )
+        })}
+      </Group>
     </Panel>
   )
 }
