@@ -131,9 +131,10 @@ const Sky = ({ id, title }) => {
             after={<Link onClick={handleOpenAll}>Показать все</Link>}
             description={`Начальная цена: ${activeTab.startPrice} руб.`}
           >
-            <Title weight="medium" level="2">
+            {/* <Title weight="medium" level="2">
               {activeTab.title} <span className={s.count}>{activeTab.count}</span>
-            </Title>
+            </Title> */}
+            {activeTab.title} <span className={s.count}>{activeTab.count}</span>
           </SimpleCell>
         </Group>
         <Stat />

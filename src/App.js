@@ -18,6 +18,7 @@ import { ProfilePanel, SkyPanel } from './panels'
 // import { signIn } from './api'
 import { Modals } from './common/Modals'
 import { BidList } from './panels/BidList'
+import { APP_ID } from './constants'
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('profile')
@@ -51,20 +52,22 @@ const App = () => {
     setActivePopout(null)
   }, [])
 
-  useEffect(() => {
-    bridge.subscribe(({ detail: { type, data } }) => {
-      if (type === 'VKWebAppUpdateConfig') {
-        const schemeAttribute = document.createAttribute('scheme')
+  const getAuthToken = useCallback(async () => {
+    try {
+      const res = await bridge.send('VKWebAppGetAuthToken', {
+        app_id: APP_ID,
+        scope: 'market,friends', // ???
+      })
 
-        schemeAttribute.value = data.scheme ? data.scheme : 'client_light'
-        document.body.attributes.setNamedItem(schemeAttribute)
-      }
-    })
+      console.log('res', res)
+    } catch (error) {
+      console.error('error', error)
+    }
   }, [])
 
-  // useEffect(() => {
-  //   // bridge.send("VKWebAppGetAuthToken", {"app_id": 6909581, "scope": "friends,status"});
-  // }, [])
+  useEffect(() => {
+    getAuthToken()
+  }, [getAuthToken])
 
   useEffect(() => {
     // fetchUser()
@@ -75,6 +78,8 @@ const App = () => {
     setActivePanel,
     activeModal,
     setActiveModal,
+    activePopout,
+    setActivePopout,
   }
 
   const PAGES = [

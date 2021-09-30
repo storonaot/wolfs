@@ -1,7 +1,5 @@
 export const URL = 'https://gamer.super-app.studio/api'
 
-export const APP_ID = 7964162
-
 const getHeaders = () =>
   new Headers({
     'Content-Type': 'application/json;charset=utf-8',

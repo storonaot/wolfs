@@ -5,11 +5,12 @@ import { Icon24Dismiss } from '@vkontakte/icons'
 import { BidForm } from '../BidForm'
 import { BID_TYPE, MODALS } from '../../constants'
 import { AppContext } from '../../context'
+import DoneCard from '../DoneCard'
 
 const Modals = ({ activeModal }) => {
   const { setActiveModal } = useContext(AppContext)
 
-  const { bidType = BID_TYPE.sell } = activeModal.props
+  const { bidType = BID_TYPE.sell } = activeModal.props || {}
 
   const handleClose = useCallback(() => {
     setActiveModal({ key: null, props: {} })
@@ -39,6 +40,20 @@ const Modals = ({ activeModal }) => {
         }
       >
         <BidForm bidType={bidType} />
+      </ModalPage>
+      <ModalPage
+        id={MODALS.done}
+        header={
+          <ModalPageHeader
+            right={
+              <PanelHeaderButton onClick={handleClose}>
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            }
+          />
+        }
+      >
+        <DoneCard />
       </ModalPage>
     </ModalRoot>
   )
