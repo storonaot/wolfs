@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, CellButton, ContentCard, Group, Panel, SimpleCell } from '@vkontakte/vkui'
+import { Avatar, CellButton, ContentCard, Group, Link, Panel, SimpleCell } from '@vkontakte/vkui'
 import {
   Icon28ArrowLeftOutline,
   Icon28ArrowRightOutline,
@@ -19,7 +19,12 @@ const Picker = ({ id, user, title }) => {
     <Panel id={id}>
       <ContentCard
         src="https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-        header={mock.name}
+        header={
+          <div className={s.grid}>
+            {mock.name}
+            <Link>Связаться</Link>
+          </div>
+        }
         text={
           <Group>
             <SimpleCell

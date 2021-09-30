@@ -11,8 +11,6 @@ import { Picker } from '../../common/Picker'
 // }
 
 const BuyPanel = ({ id }) => {
-  console.log(id)
-
   return (
     <Panel id={id}>
       <Picker />
