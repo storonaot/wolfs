@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import bridge from '@vkontakte/vk-bridge'
 import { AdaptivityProvider, Epic, ScreenSpinner, Tabbar, TabbarItem, View } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
@@ -6,12 +6,39 @@ import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from
 
 import { AppContext } from './context'
 import { SkyPanel } from './panels'
-import { signIn } from './api'
+// import { signIn } from './api'
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('sky')
   const [activePopout, setActivePopout] = useState(null)
-  const [user, setUser] = useState(null)
+
+  const [, setUser] = useState(null)
+
+  const fetchUser = useCallback(async () => {
+    setActivePopout(<ScreenSpinner size="large" />)
+
+    try {
+      const _user = await bridge.send('VKWebAppGetUserInfo')
+
+      // eslint-disable-next-line no-console
+      console.log('_user', _user)
+
+      setUser(_user)
+
+      // signIn({ ..._user, avatar: _user.photo_200 })
+      //   .then(usr => {
+      //     // eslint-disable-next-line no-console
+      //     console.log('user', usr)
+      //     setUser(usr)
+      //   })
+      //   .finally(() => {
+      //     setActivePopout(null)
+      //   })
+    } catch (error) {
+      console.error('error', error.message)
+    }
+    setActivePopout(null)
+  }, [])
 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
@@ -22,30 +49,11 @@ const App = () => {
         document.body.attributes.setNamedItem(schemeAttribute)
       }
     })
-
-    async function fetchData() {
-      setActivePopout(<ScreenSpinner size="large" />)
-
-      try {
-        const _user = await bridge.send('VKWebAppGetUserInfo')
-
-        signIn({ ..._user, avatar: _user.photo_200 })
-          .then(usr => {
-            // eslint-disable-next-line no-console
-            console.log('user', usr)
-            setUser(usr)
-          })
-          .finally(() => {
-            setActivePopout(null)
-          })
-      } catch (error) {
-        console.error('error', error.message)
-      }
-      setActivePopout(null)
-    }
-
-    fetchData()
   }, [])
+
+  useEffect(() => {
+    fetchUser()
+  }, [fetchUser])
 
   const AppContextValue = {
     activePanel,
@@ -90,9 +98,7 @@ const App = () => {
     </Tabbar>
   )
 
-  return !user ? (
-    <ScreenSpinner size="large" />
-  ) : (
+  return (
     <AdaptivityProvider>
       <AppContext.Provider value={AppContextValue}>
         <Epic activeStory={activePanel} tabbar={tabbar}>
