@@ -14,7 +14,7 @@ import '@vkontakte/vkui/dist/vkui.css'
 import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from '@vkontakte/icons'
 
 import { AppContext } from './context'
-import { ProfilePanel, SkyPanel } from './panels'
+import { BuyPanel, ProfilePanel, SkyPanel } from './panels'
 // import { signIn } from './api'
 import { Modals } from './common/Modals'
 import { BidList } from './panels/BidList'
@@ -80,8 +80,8 @@ const App = () => {
   const PAGES = [
     {
       epicIcon: <Icon28LinkCircleOutline />,
-      name: 'wtf',
-      panel: <SkyPanel id="wtf" title="wtf" />,
+      name: 'buyPanel',
+      panel: <BuyPanel id="buyPanel" />,
       title: 'wtf',
     },
     {
