@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {
+  Button,
   Card,
   Div,
   Group,
@@ -27,6 +28,7 @@ const tabsArr = [
     title: 'Купить',
     count: 152,
     startPrice: 10.34,
+    actionMode: 'commerce',
   },
 
   {
@@ -34,6 +36,7 @@ const tabsArr = [
     title: 'Продать',
     count: 68,
     startPrice: 11.34,
+    actionMode: 'destructive',
   },
 ]
 
@@ -57,50 +60,69 @@ const TabsComponent = ({ activeTab, setActiveTab }) => {
   )
 }
 
+const Stat = () => {
+  return (
+    <Group mode="plain">
+      <div className={s.statWrapper}>
+        <div>
+          <Title weight="bold" level="3" className={s.title}>
+            Цена
+          </Title>
+          <Card>
+            <Div className={s.valueList}>
+              <span className={s.value}>10,34 ₽</span>
+              <span className={s.value}>10,34 ₽</span>
+              <span className={s.value}>10,34 ₽</span>
+              <span className={s.value}>10,34 ₽</span>
+              <span className={s.value}>10,34 ₽ и более</span>
+            </Div>
+          </Card>
+        </div>
+        <div>
+          <Title weight="bold" level="3" style={{ textAlign: 'center', marginBottom: 7 }}>
+            Количество
+          </Title>
+          <Card>
+            <Div className={s.valueList}>
+              <span className={s.value}>1</span>
+              <span className={s.value}>56</span>
+              <span className={s.value}>1</span>
+              <span className={s.value}>4</span>
+              <span className={s.value}>134</span>
+            </Div>
+          </Card>
+        </div>
+      </div>
+    </Group>
+  )
+}
+
 const Sky = ({ id, title }) => {
   const [activeTab, setActiveTab] = useState(tabsArr[0])
 
   return (
-    <Panel id={id}>
+    <Panel className={s.panel} id={id}>
       <PanelHeader title={title} />
       <TabsComponent activeTab={activeTab} setActiveTab={setActiveTab} />
       <Separator />
-      <Group mode="plain">
-        <SimpleCell
-          indicator={<Link>Показать все</Link>}
-          description={`Начальная цена: ${activeTab.startPrice} руб.`}
-        >
-          <Title weight="medium" level="2">
-            {activeTab.title} <span className={s.count}>{activeTab.count}</span>
-          </Title>
-        </SimpleCell>
-      </Group>
-      <Group mode="plain">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gridGap: 8,
-          }}
-        >
-          <div>
-            <Title weight="bold" level="3" style={{ textAlign: 'center', marginBottom: 7 }}>
-              Цена
+      <div className={s.content}>
+        <Group mode="plain">
+          <SimpleCell
+            indicator={<Link>Показать все</Link>}
+            description={`Начальная цена: ${activeTab.startPrice} руб.`}
+          >
+            <Title weight="medium" level="2">
+              {activeTab.title} <span className={s.count}>{activeTab.count}</span>
             </Title>
-            <Card>
-              <Div>123</Div>
-            </Card>
-          </div>
-          <div>
-            <Title weight="bold" level="3" style={{ textAlign: 'center', marginBottom: 7 }}>
-              Количество
-            </Title>
-            <Card>
-              <Div>123</Div>
-            </Card>
-          </div>
-        </div>
-      </Group>
+          </SimpleCell>
+        </Group>
+        <Stat />
+        <Div className={s.buttonWrapper}>
+          <Button stretched size="l" mode={activeTab.actionMode}>
+            {activeTab.title}
+          </Button>
+        </Div>
+      </div>
     </Panel>
   )
 }
