@@ -27,15 +27,11 @@ const Picker = ({ id, user, title }) => {
               indicator={`${mock.price} ₽`}
             >{`${mock.coinsCount} шт.`}</SimpleCell>
             <div className={s.grid}>
-              <CellButton
-                before={
-                  <Avatar>
-                    <Icon28ArrowLeftOutline />
-                  </Avatar>
-                }
-                size="l"
-                mode="outline"
-              />
+              <CellButton size="l" mode="outline">
+                <Avatar>
+                  <Icon28ArrowLeftOutline />
+                </Avatar>
+              </CellButton>
               <CellButton
                 after={
                   <Avatar>
