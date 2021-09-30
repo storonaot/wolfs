@@ -1,4 +1,6 @@
-.declined {
-  color: #e64646;
-  font-size: 0.9em;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8px;
+  justify-items: center;
 }

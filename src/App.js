@@ -85,16 +85,16 @@ const App = () => {
       title: 'wtf',
     },
     {
-      epicIcon: <Icon28LogoVkOutline />,
-      name: 'sky',
-      panel: <SkyPanel id="sky" title="/sky" />,
-      title: '/sky',
-    },
-    {
       epicIcon: <Icon28UsersOutline />,
       name: 'profile',
       panel: <ProfilePanel id="profile" title="Профиль" />,
       title: 'Профиль',
+    },
+    {
+      epicIcon: <Icon28LogoVkOutline />,
+      name: 'sky',
+      panel: <SkyPanel id="sky" title="/sky" />,
+      title: '/sky',
     },
     {
       epicIcon: <Icon28UsersOutline />,
