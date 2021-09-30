@@ -1,20 +1,10 @@
 import React from 'react'
-import { Avatar, Cell, Group, Header, Panel, PanelHeader } from '@vkontakte/vkui'
+import { Panel } from '@vkontakte/vkui'
 
 const Profile = ({ id, user, title }) => {
   return (
     <Panel id={id}>
-      <PanelHeader>{title}</PanelHeader>
-      {user && (
-        <Group>
-          <Cell
-            before={user.photo_200 ? <Avatar src={user.photo_200} size={72} /> : null}
-            description={user.city && user.city.title ? user.city.title : ''}
-          >
-            {`${user.first_name} ${user.last_name}`}
-          </Cell>
-        </Group>
-      )}
+      <h1>Profile</h1>
     </Panel>
   )
 }

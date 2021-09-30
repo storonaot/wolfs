@@ -1,8 +1,8 @@
 import React from 'react'
-import { PanelHeader, PanelHeaderButton, platform } from '@vkontakte/vkui'
+import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui'
 import { Icon28ArrowLeftOutline, Icon28ArrowRightOutline } from '@vkontakte/icons'
 
-const osName = platform()
+// const osName = platform()
 
 const Header = ({ title, goBack, goPrew }) => {
   return (
