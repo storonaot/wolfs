@@ -18,7 +18,7 @@ import {
 } from '@vkontakte/icons'
 
 import { AppContext } from './context'
-import { BuyPanel, ProfilePanel, SkyPanel } from './panels'
+import { ProfilePanel, SkyPanel } from './panels'
 // import { signIn } from './api'
 import { Modals } from './common/Modals'
 
