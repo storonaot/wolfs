@@ -20,7 +20,7 @@ import { Modals } from './common/Modals'
 import { BidList } from './panels/BidList'
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState('profile')
+  const [activePanel, setActivePanel] = useState({ key: 'profile', props: {} })
   const [activePopout, setActivePopout] = useState(null)
   const [activeModal, setActiveModal] = useState({ key: null, props: {} }) // todo поставить ключ null когда сделаем кнопку
   const [user, setUser] = useState(null)
@@ -111,8 +111,8 @@ const App = () => {
         return (
           <TabbarItem
             key={page.name}
-            onClick={() => setActivePanel(page.name)}
-            selected={activePanel === page.name}
+            onClick={() => setActivePanel({ key: page.name, props: {} })}
+            selected={activePanel.key === page.name}
             text={page.title}
           >
             {page.epicIcon}
@@ -128,7 +128,7 @@ const App = () => {
     <AdaptivityProvider>
       <AppRoot style={{ backgroundColor: '#fff' }}>
         <AppContext.Provider value={AppContextValue}>
-          <Epic activeStory={activePanel} tabbar={tabbar}>
+          <Epic activeStory={activePanel.key} tabbar={tabbar}>
             {PAGES.map(page => {
               return (
                 <View

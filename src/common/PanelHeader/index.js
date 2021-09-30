@@ -4,7 +4,7 @@ import { Icon28ArrowLeftOutline } from '@vkontakte/icons'
 
 import { AppContext } from '../../context'
 
-const PanelHeader = ({ children, goBack }) => {
+const PanelHeader = ({ children, goBack, title }) => {
   const { setActivePanel } = useContext(AppContext)
 
   return (
@@ -15,7 +15,7 @@ const PanelHeader = ({ children, goBack }) => {
         goBack && (
           <PanelHeaderButton
             onClick={() => {
-              setActivePanel(goBack)
+              setActivePanel({ key: goBack, props: {} })
             }}
           >
             <Icon28ArrowLeftOutline />
