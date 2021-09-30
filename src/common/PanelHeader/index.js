@@ -1,28 +1,9 @@
-import React, { useContext } from 'react'
-import { PanelHeaderButton, PanelHeader as VKPanelHeader } from '@vkontakte/vkui'
-import { Icon28ArrowLeftOutline } from '@vkontakte/icons'
+import React from 'react'
+import { PanelHeader as VKPanelHeader } from '@vkontakte/vkui'
 
-import { AppContext } from '../../context'
-
-const PanelHeader = ({ children, goBack, title }) => {
-  const { setActivePanel } = useContext(AppContext)
-
+const PanelHeader = ({ children, before }) => {
   return (
-    <VKPanelHeader
-      style={{ textAlign: 'center' }}
-      separator
-      left={
-        goBack && (
-          <PanelHeaderButton
-            onClick={() => {
-              setActivePanel({ key: goBack, props: {} })
-            }}
-          >
-            <Icon28ArrowLeftOutline />
-          </PanelHeaderButton>
-        )
-      }
-    >
+    <VKPanelHeader style={{ textAlign: 'center' }} separator left={before}>
       {children}
     </VKPanelHeader>
   )
