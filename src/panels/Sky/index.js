@@ -1,12 +1,12 @@
 import React from 'react'
 import { Panel } from '@vkontakte/vkui'
 
-const Settings = ({ id, title }) => {
+const Sky = ({ id, title }) => {
   return (
     <Panel id={id}>
-      <h1>Settings</h1>
+      <h1>Sky</h1>
     </Panel>
   )
 }
 
-export default Settings
+export default Sky

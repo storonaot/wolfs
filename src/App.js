@@ -2,20 +2,16 @@ import React, { useEffect, useState } from 'react'
 import bridge from '@vkontakte/vk-bridge'
 import { Epic, Tabbar, TabbarItem, View } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
-import Icon28UsersOutline from '@vkontakte/icons/dist/28/users_outline'
+import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from '@vkontakte/icons'
 
-import { PANELS } from './constants'
 import { AppContext } from './context'
-import Friends from './panels/Friends'
-import Settings from './panels/Settings'
-import Profile from './panels/Profile'
-
+import { SkyPanel } from './panels'
 // import { signIn } from './api'
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState(PANELS.profile)
+  const [activePanel, setActivePanel] = useState('sky')
   const [activePopout] = useState(null) // <ScreenSpinner size='large'/>
-  const [user, setUser] = useState(null)
+  const [, setUser] = useState(null)
 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
@@ -45,45 +41,54 @@ const App = () => {
     setActivePanel,
   }
 
+  const PAGES = [
+    {
+      epicIcon: <Icon28LinkCircleOutline />,
+      name: 'wtf',
+      panel: <SkyPanel id="wtf" title="wtf" />,
+      title: 'wtf',
+    },
+    {
+      epicIcon: <Icon28LogoVkOutline />,
+      name: 'sky',
+      panel: <SkyPanel id="sky" title="/sky" />,
+      title: '/sky',
+    },
+    {
+      epicIcon: <Icon28UsersOutline />,
+      name: 'profile',
+      panel: <SkyPanel id="profile" title="Профиль" />,
+      title: 'Профиль',
+    },
+  ]
+
   const tabbar = (
     <Tabbar>
-      <TabbarItem
-        onClick={() => setActivePanel(PANELS.friends)}
-        selected={activePanel === PANELS.friends}
-        text="Friends"
-      >
-        <Icon28UsersOutline />
-      </TabbarItem>
-
-      <TabbarItem
-        onClick={() => setActivePanel(PANELS.profile)}
-        selected={activePanel === PANELS.profile}
-        text="Profile"
-      >
-        <Icon28UsersOutline />
-      </TabbarItem>
-      <TabbarItem
-        onClick={() => setActivePanel(PANELS.settings)}
-        selected={activePanel === PANELS.settings}
-        text="Settings"
-      >
-        <Icon28UsersOutline />
-      </TabbarItem>
+      {PAGES.map(page => {
+        return (
+          <TabbarItem
+            key={page.name}
+            onClick={() => setActivePanel(page.name)}
+            selected={activePanel === page.name}
+            text={page.title}
+          >
+            {page.epicIcon}
+          </TabbarItem>
+        )
+      })}
     </Tabbar>
   )
 
   return (
     <AppContext.Provider value={AppContextValue}>
-      <Epic activeStory={activePanel} tabbar={tabbar}>
-        <View id={PANELS.profile} activePanel={PANELS.profile} popout={activePopout}>
-          <Profile id={PANELS.profile} title="Мой профиль" user={user} />
-        </View>
-        <View id={PANELS.settings} activePanel={PANELS.settings} popout={activePopout}>
-          <Settings id={PANELS.settings} title="Геймер" />
-        </View>
-        <View id={PANELS.friends} activePanel={PANELS.friends} popout={activePopout}>
-          <Friends id={PANELS.friends} title="Геймер" />
-        </View>
+      <Epic style={{ marginBottom: 16 }} activeStory={activePanel} tabbar={tabbar}>
+        {PAGES.map(page => {
+          return (
+            <View id={page.name} activePanel={page.name} popout={activePopout}>
+              {page.panel}
+            </View>
+          )
+        })}
       </Epic>
     </AppContext.Provider>
   )

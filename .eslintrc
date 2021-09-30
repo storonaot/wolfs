@@ -7,7 +7,7 @@
       "jsx": true
     }
   },
-  "plugins": ["import", "react", "prettier"],
+  "plugins": ["import", "prettier"],
   "extends": [
     "eslint:recommended",
     "@vkontakte/eslint-config/react",
