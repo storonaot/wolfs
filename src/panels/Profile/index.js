@@ -21,7 +21,7 @@ import {
 } from '@vkontakte/icons'
 
 import PanelHeader from '../../common/PanelHeader'
-import { BID_TYPE } from '../../constants'
+import { BID_TYPE, MODALS } from '../../constants'
 import { AppContext } from '../../context'
 
 import s from './styles.module.scss'
@@ -90,7 +90,7 @@ const ClaimItem = ({ claim }) => {
 }
 
 const Profile = ({ id, user, title }) => {
-  const { setActivePopout } = useContext(AppContext)
+  const { setActivePopout, setActiveModal } = useContext(AppContext)
   const addBtnRef = useRef(null)
 
   const makeClaim = useCallback(() => {
@@ -106,6 +106,9 @@ const Profile = ({ id, user, title }) => {
         popupDirection="top"
       >
         <ActionSheetItem
+          onClick={() => {
+            setActiveModal({ key: MODALS.payment, props: { bidType: BID_TYPE.buy } })
+          }}
           autoclose
           mode="destructive"
           before={<Icon28MoneyRequestOutline fill="#4BB34B" />}
@@ -113,6 +116,9 @@ const Profile = ({ id, user, title }) => {
           Купить баллы
         </ActionSheetItem>
         <ActionSheetItem
+          onClick={() => {
+            setActiveModal({ key: MODALS.payment, props: { bidType: BID_TYPE.sell } })
+          }}
           autoclose
           mode="destructive"
           before={<Icon28MoneySendOutline fill="#E64646" />}
@@ -121,7 +127,7 @@ const Profile = ({ id, user, title }) => {
         </ActionSheetItem>
       </ActionSheet>,
     )
-  }, [setActivePopout])
+  }, [setActiveModal, setActivePopout])
 
   return (
     <Panel id={id}>
