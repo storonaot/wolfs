@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import bridge from '@vkontakte/vk-bridge'
-import { AdaptivityProvider, Epic, Tabbar, TabbarItem, View } from '@vkontakte/vkui'
+import { AdaptivityProvider, Epic, ScreenSpinner, Tabbar, TabbarItem, View } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
 import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from '@vkontakte/icons'
 
 import { AppContext } from './context'
 import { SkyPanel } from './panels'
-// import { signIn } from './api'
+import { signIn } from './api'
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('sky')
-  const [activePopout] = useState(null) // <ScreenSpinner size='large'/>
-  const [, setUser] = useState(null)
+  const [activePopout, setActivePopout] = useState(null)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
@@ -24,13 +24,24 @@ const App = () => {
     })
 
     async function fetchData() {
+      setActivePopout(<ScreenSpinner size="large" />)
+
       try {
         const _user = await bridge.send('VKWebAppGetUserInfo')
 
-        setUser(_user)
+        signIn({ ..._user, avatar: _user.photo_200 })
+          .then(usr => {
+            // eslint-disable-next-line no-console
+            console.log('user', usr)
+            setUser(usr)
+          })
+          .finally(() => {
+            setActivePopout(null)
+          })
       } catch (error) {
         console.error('error', error.message)
       }
+      setActivePopout(null)
     }
 
     fetchData()
@@ -79,7 +90,9 @@ const App = () => {
     </Tabbar>
   )
 
-  return (
+  return !user ? (
+    <ScreenSpinner size="large" />
+  ) : (
     <AdaptivityProvider>
       <AppContext.Provider value={AppContextValue}>
         <Epic activeStory={activePanel} tabbar={tabbar}>
