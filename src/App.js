@@ -1,16 +1,27 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import bridge from '@vkontakte/vk-bridge'
-import { AdaptivityProvider, Epic, ScreenSpinner, Tabbar, TabbarItem, View } from '@vkontakte/vkui'
+import {
+  AdaptivityProvider,
+  AppRoot,
+  Epic,
+  ScreenSpinner,
+  Tabbar,
+  TabbarItem,
+  View,
+} from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
 import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from '@vkontakte/icons'
 
 import { AppContext } from './context'
 import { SkyPanel } from './panels'
 import { signIn } from './api'
+import { Modals } from './common/Modals'
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('sky')
   const [activePopout, setActivePopout] = useState(null)
+  const [activeModal, setActiveModal] = useState({ key: 'payment', props: {} }) // todo поставить ключ null когда сделаем кнопку
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -50,6 +61,8 @@ const App = () => {
   const AppContextValue = {
     activePanel,
     setActivePanel,
+    activeModal,
+    setActiveModal,
   }
 
   const PAGES = [
@@ -90,21 +103,29 @@ const App = () => {
     </Tabbar>
   )
 
-  return !user ? (
+  return user ? (
     <ScreenSpinner size="large" />
   ) : (
     <AdaptivityProvider>
-      <AppContext.Provider value={AppContextValue}>
-        <Epic activeStory={activePanel} tabbar={tabbar}>
-          {PAGES.map(page => {
-            return (
-              <View key={page.name} id={page.name} activePanel={page.name} popout={activePopout}>
-                {page.panel}
-              </View>
-            )
-          })}
-        </Epic>
-      </AppContext.Provider>
+      <AppRoot>
+        <AppContext.Provider value={AppContextValue}>
+          <Epic activeStory={activePanel} tabbar={tabbar}>
+            {PAGES.map(page => {
+              return (
+                <View
+                  key={page.name}
+                  id={page.name}
+                  activePanel={page.name}
+                  popout={activePopout}
+                  modal={<Modals activeModal={activeModal} />}
+                >
+                  {page.panel}
+                </View>
+              )
+            })}
+          </Epic>
+        </AppContext.Provider>
+      </AppRoot>
     </AdaptivityProvider>
   )
 }
