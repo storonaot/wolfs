@@ -16,17 +16,13 @@ import {
 
 import PanelHeader from '../../common/PanelHeader'
 import { AppContext } from '../../context'
+import { BID_TYPE } from '../../constants'
 
 import s from './styles.module.scss'
 
-const Tabs = {
-  BUY: 'buy',
-  SELL: 'sell',
-}
-
 const tabsArr = [
   {
-    type: Tabs.BUY,
+    type: BID_TYPE.BUY,
     title: 'Купить',
     count: 152,
     startPrice: 10.34,
@@ -34,7 +30,7 @@ const tabsArr = [
   },
 
   {
-    type: Tabs.SELL,
+    type: BID_TYPE.SELL,
     title: 'Продать',
     count: 68,
     startPrice: 11.34,
@@ -62,6 +58,9 @@ const TabsComponent = ({ activeTab, setActiveTab }) => {
   )
 }
 
+const prices = ['10,34 ₽', '10,35 ₽', '10,36 ₽', '10,37 ₽', '10,38 ₽']
+const counts = [1, 56, 2, 4, 134]
+
 const Stat = () => {
   return (
     <Group mode="plain">
@@ -72,11 +71,14 @@ const Stat = () => {
           </Title>
           <Card>
             <Div className={s.valueList}>
-              <span className={s.value}>10,34 ₽</span>
-              <span className={s.value}>10,34 ₽</span>
-              <span className={s.value}>10,34 ₽</span>
-              <span className={s.value}>10,34 ₽</span>
-              <span className={s.value}>10,34 ₽ и более</span>
+              {prices.map((price, index) => {
+                return (
+                  <>
+                    <span className={s.value}>{price}</span>
+                    {index !== prices.length - 1 && <Separator wide className={s.separator} />}
+                  </>
+                )
+              })}
             </Div>
           </Card>
         </div>
@@ -86,11 +88,14 @@ const Stat = () => {
           </Title>
           <Card>
             <Div className={s.valueList}>
-              <span className={s.value}>1</span>
-              <span className={s.value}>56</span>
-              <span className={s.value}>1</span>
-              <span className={s.value}>4</span>
-              <span className={s.value}>134</span>
+              {counts.map((item, index) => {
+                return (
+                  <>
+                    <span className={s.value}>{item}</span>
+                    {index !== counts.length - 1 && <Separator wide className={s.separator} />}
+                  </>
+                )
+              })}
             </Div>
           </Card>
         </div>
@@ -114,13 +119,13 @@ const Sky = ({ id, title }) => {
 
   return (
     <Panel className={s.panel} id={id}>
-      <PanelHeader title={title} />
+      <PanelHeader>{title}</PanelHeader>
       <TabsComponent activeTab={activeTab} setActiveTab={setActiveTab} />
       <Separator />
       <div className={s.content}>
         <Group mode="plain">
           <SimpleCell
-            indicator={<Link onClick={handleOpenAll}>Показать все</Link>}
+            after={<Link onClick={handleOpenAll}>Показать все</Link>}
             description={`Начальная цена: ${activeTab.startPrice} руб.`}
           >
             <Title weight="medium" level="2">

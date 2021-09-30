@@ -4,7 +4,7 @@ import { Icon28ArrowLeftOutline } from '@vkontakte/icons'
 
 import { AppContext } from '../../context'
 
-const PanelHeader = ({ title, goBack }) => {
+const PanelHeader = ({ children, goBack }) => {
   const { setActivePanel } = useContext(AppContext)
 
   return (
@@ -23,7 +23,7 @@ const PanelHeader = ({ title, goBack }) => {
         )
       }
     >
-      {title}
+      {children}
     </VKPanelHeader>
   )
 }

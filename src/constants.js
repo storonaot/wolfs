@@ -1,9 +1,3 @@
-export const PANELS = {
-  profile: 'profile',
-  friends: 'friends',
-  settings: 'settings',
-}
-
 export const MODALS = {
   payment: 'payment',
 }
