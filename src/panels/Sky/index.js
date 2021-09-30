@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+/* eslint-disable no-console */
+import React, { useCallback, useContext, useState } from 'react'
 import {
   Button,
   Card,
@@ -14,6 +15,7 @@ import {
 } from '@vkontakte/vkui'
 
 import PanelHeader from '../../common/PanelHeader'
+import { AppContext } from '../../context'
 
 import s from './styles.module.scss'
 
@@ -99,6 +101,16 @@ const Stat = () => {
 
 const Sky = ({ id, title }) => {
   const [activeTab, setActiveTab] = useState(tabsArr[0])
+  const { setActivePanel, setActiveModal } = useContext(AppContext)
+
+  const handleOpenAll = useCallback(() => {
+    setActivePanel('bidList')
+  }, [setActivePanel])
+
+  const handleTransaction = useCallback(() => {
+    console.log('set modal')
+    setActiveModal({ key: 'payment', props: { bidType: activeTab.type } })
+  }, [activeTab.type, setActiveModal])
 
   return (
     <Panel className={s.panel} id={id}>
@@ -108,7 +120,7 @@ const Sky = ({ id, title }) => {
       <div className={s.content}>
         <Group mode="plain">
           <SimpleCell
-            indicator={<Link>Показать все</Link>}
+            indicator={<Link onClick={handleOpenAll}>Показать все</Link>}
             description={`Начальная цена: ${activeTab.startPrice} руб.`}
           >
             <Title weight="medium" level="2">
@@ -118,7 +130,7 @@ const Sky = ({ id, title }) => {
         </Group>
         <Stat />
         <Div className={s.buttonWrapper}>
-          <Button stretched size="l" mode={activeTab.actionMode}>
+          <Button stretched size="l" mode={activeTab.actionMode} onClick={handleTransaction}>
             {activeTab.title}
           </Button>
         </Div>

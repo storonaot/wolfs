@@ -17,11 +17,12 @@ import { AppContext } from './context'
 import { SkyPanel } from './panels'
 // import { signIn } from './api'
 import { Modals } from './common/Modals'
+import { BidList } from './panels/BidList'
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('sky')
   const [activePopout, setActivePopout] = useState(null)
-  const [activeModal, setActiveModal] = useState({ key: 'payment', props: {} }) // todo поставить ключ null когда сделаем кнопку
+  const [activeModal, setActiveModal] = useState({ key: null, props: {} }) // todo поставить ключ null когда сделаем кнопку
   const [user, setUser] = useState(null)
 
   const fetchUser = useCallback(async () => {
@@ -95,11 +96,18 @@ const App = () => {
       panel: <SkyPanel id="profile" title="Профиль" />,
       title: 'Профиль',
     },
+    {
+      epicIcon: <Icon28UsersOutline />,
+      name: 'bidList',
+      panel: <BidList id="bidList" title="/sky" />,
+    },
   ]
 
   const tabbar = (
     <Tabbar>
       {PAGES.map(page => {
+        if (page.name === 'bidList') return
+
         return (
           <TabbarItem
             key={page.name}
