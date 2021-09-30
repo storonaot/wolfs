@@ -78,6 +78,8 @@ const App = () => {
     setActivePanel,
     activeModal,
     setActiveModal,
+    activePopout,
+    setActivePopout,
   }
 
   const PAGES = [
