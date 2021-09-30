@@ -13,7 +13,8 @@
     "@vkontakte/eslint-config/react",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "prettier/react",
+    "plugin:react/recommended"
   ],
   "env": {
     "node": true,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import bridge from '@vkontakte/vk-bridge'
-import { Epic, Tabbar, TabbarItem, View } from '@vkontakte/vkui'
+import { AdaptivityProvider, Epic, Tabbar, TabbarItem, View } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
 import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from '@vkontakte/icons'
 
@@ -80,17 +80,19 @@ const App = () => {
   )
 
   return (
-    <AppContext.Provider value={AppContextValue}>
-      <Epic style={{ marginBottom: 16 }} activeStory={activePanel} tabbar={tabbar}>
-        {PAGES.map(page => {
-          return (
-            <View id={page.name} activePanel={page.name} popout={activePopout}>
-              {page.panel}
-            </View>
-          )
-        })}
-      </Epic>
-    </AppContext.Provider>
+    <AdaptivityProvider>
+      <AppContext.Provider value={AppContextValue}>
+        <Epic activeStory={activePanel} tabbar={tabbar}>
+          {PAGES.map(page => {
+            return (
+              <View key={page.name} id={page.name} activePanel={page.name} popout={activePopout}>
+                {page.panel}
+              </View>
+            )
+          })}
+        </Epic>
+      </AppContext.Provider>
+    </AdaptivityProvider>
   )
 }
 
