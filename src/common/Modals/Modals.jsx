@@ -3,6 +3,7 @@ import { ModalPage, ModalPageHeader, ModalRoot, PanelHeaderButton } from '@vkont
 import { Icon24Dismiss } from '@vkontakte/icons'
 
 import { BidForm } from '../BidForm'
+import { TransactionForm } from '../TransactionForm'
 import { BID_TYPE, MODALS } from '../../constants'
 import { AppContext } from '../../context'
 
@@ -39,6 +40,23 @@ const Modals = ({ activeModal }) => {
         }
       >
         <BidForm bidType={bidType} />
+      </ModalPage>
+      <ModalPage
+        id={MODALS.transaction}
+        settlingHeight={45}
+        header={
+          <ModalPageHeader
+            right={
+              <PanelHeaderButton onClick={handleClose}>
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            }
+          >
+            {bidType === BID_TYPE.sell ? 'Продать' : 'Купить'}
+          </ModalPageHeader>
+        }
+      >
+        <TransactionForm bidType={bidType} />
       </ModalPage>
     </ModalRoot>
   )

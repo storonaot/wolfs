@@ -112,8 +112,8 @@ const Sky = ({ id, title }) => {
   const { setActivePanel, setActiveModal } = useContext(AppContext)
 
   const handleOpenAll = useCallback(() => {
-    setActivePanel('bidList')
-  }, [setActivePanel])
+    setActivePanel({ key: 'bidList', props: { bidType: activeTab.type } })
+  }, [activeTab.type, setActivePanel])
 
   const handleTransaction = useCallback(() => {
     console.log('set modal')
