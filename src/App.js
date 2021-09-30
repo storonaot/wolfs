@@ -14,13 +14,13 @@ import '@vkontakte/vkui/dist/vkui.css'
 import { Icon28LinkCircleOutline, Icon28LogoVkOutline, Icon28UsersOutline } from '@vkontakte/icons'
 
 import { AppContext } from './context'
-import { SkyPanel } from './panels'
+import { ProfilePanel, SkyPanel } from './panels'
 // import { signIn } from './api'
 import { Modals } from './common/Modals'
 import { BidList } from './panels/BidList'
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState('sky')
+  const [activePanel, setActivePanel] = useState('profile')
   const [activePopout, setActivePopout] = useState(null)
   const [activeModal, setActiveModal] = useState({ key: null, props: {} }) // todo поставить ключ null когда сделаем кнопку
   const [user, setUser] = useState(null)
@@ -93,7 +93,7 @@ const App = () => {
     {
       epicIcon: <Icon28UsersOutline />,
       name: 'profile',
-      panel: <SkyPanel id="profile" title="Профиль" />,
+      panel: <ProfilePanel id="profile" title="Профиль" />,
       title: 'Профиль',
     },
     {
