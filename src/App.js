@@ -118,7 +118,7 @@ const App = () => {
     <ScreenSpinner size="large" />
   ) : (
     <AdaptivityProvider>
-      <AppRoot>
+      <AppRoot style={{ backgroundColor: '#fff' }}>
         <AppContext.Provider value={AppContextValue}>
           <Epic activeStory={activePanel} tabbar={tabbar}>
             {PAGES.map(page => {
