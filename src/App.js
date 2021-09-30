@@ -12,7 +12,7 @@ const App = () => {
   const [activePanel, setActivePanel] = useState('sky')
   const [activePopout, setActivePopout] = useState(null)
 
-  const [, setUser] = useState(null)
+  const [user, setUser] = useState(null)
 
   const fetchUser = useCallback(async () => {
     setActivePopout(<ScreenSpinner size="large" />)
@@ -51,8 +51,12 @@ const App = () => {
     })
   }, [])
 
+  // useEffect(() => {
+  //   // bridge.send("VKWebAppGetAuthToken", {"app_id": 6909581, "scope": "friends,status"});
+  // }, [])
+
   useEffect(() => {
-    fetchUser()
+    // fetchUser()
   }, [fetchUser])
 
   const AppContextValue = {
@@ -98,7 +102,21 @@ const App = () => {
     </Tabbar>
   )
 
-  return (
+  return !user ? (
+    <AdaptivityProvider>
+      <AppContext.Provider value={AppContextValue}>
+        <Epic activeStory={activePanel} tabbar={tabbar}>
+          {PAGES.map(page => {
+            return (
+              <View key={page.name} id={page.name} activePanel={page.name} popout={activePopout}>
+                {page.panel}
+              </View>
+            )
+          })}
+        </Epic>
+      </AppContext.Provider>
+    </AdaptivityProvider>
+  ) : (
     <AdaptivityProvider>
       <AppContext.Provider value={AppContextValue}>
         <Epic activeStory={activePanel} tabbar={tabbar}>

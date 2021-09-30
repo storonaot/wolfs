@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
-import { Panel, TabsItem, Tabs as TabsWrapper } from '@vkontakte/vkui'
+import {
+  Group,
+  Link,
+  Panel,
+  SimpleCell,
+  TabsItem,
+  Tabs as TabsWrapper,
+  Title,
+} from '@vkontakte/vkui'
 
-// import Header from '../../common/Header'
+import PanelHeader from '../../common/PanelHeader'
+
+import s from './styles.module.scss'
 
 const Tabs = {
   BUY: 'buy',
@@ -38,7 +48,15 @@ const TabsComponent = () => {
 const Sky = ({ id, title }) => {
   return (
     <Panel id={id}>
+      <PanelHeader title={title} />
       <TabsComponent />
+      <Group mode="plain">
+        <SimpleCell indicator={<Link>Показать все</Link>} description="Начальная цена: 10,34 руб.">
+          <Title weight="medium" level="2">
+            Купить <span className={s.count}>152</span>
+          </Title>
+        </SimpleCell>
+      </Group>
     </Panel>
   )
 }
