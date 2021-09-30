@@ -22,7 +22,7 @@ import s from './styles.module.scss'
 
 const tabsArr = [
   {
-    type: BID_TYPE.BUY,
+    type: BID_TYPE.buy,
     title: 'Купить',
     count: 152,
     startPrice: 10.34,
@@ -30,7 +30,7 @@ const tabsArr = [
   },
 
   {
-    type: BID_TYPE.SELL,
+    type: BID_TYPE.sell,
     title: 'Продать',
     count: 68,
     startPrice: 11.34,
@@ -42,6 +42,9 @@ const TabsComponent = ({ activeTab, setActiveTab }) => {
   return (
     <TabsWrapper>
       {tabsArr.map(tab => {
+        console.log('activeTab', activeTab)
+        console.log('tab.type', tab.type)
+
         return (
           <TabsItem
             key={tab.type}
@@ -73,10 +76,10 @@ const Stat = () => {
             <Div className={s.valueList}>
               {prices.map((price, index) => {
                 return (
-                  <>
+                  <div key={index}>
                     <span className={s.value}>{price}</span>
                     {index !== prices.length - 1 && <Separator wide className={s.separator} />}
-                  </>
+                  </div>
                 )
               })}
             </Div>
@@ -90,10 +93,10 @@ const Stat = () => {
             <Div className={s.valueList}>
               {counts.map((item, index) => {
                 return (
-                  <>
+                  <div key={index}>
                     <span className={s.value}>{item}</span>
                     {index !== counts.length - 1 && <Separator wide className={s.separator} />}
-                  </>
+                  </div>
                 )
               })}
             </Div>
