@@ -19,7 +19,7 @@ import {
 
 import { AppContext } from './context'
 import { BuyPanel, ProfilePanel, SellPanel } from './panels'
-// import { signIn } from './api'
+import { signIn } from './api'
 import { Modals } from './common/Modals'
 
 const App = () => {
@@ -39,15 +39,13 @@ const App = () => {
 
       setUser(_user)
 
-      // signIn({ ..._user, avatar: _user.photo_200 })
-      //   .then(usr => {
-      //     // eslint-disable-next-line no-console
-      //     console.log('user', usr)
-      //     setUser(usr)
-      //   })
-      //   .finally(() => {
-      //     setActivePopout(null)
-      //   })
+      signIn({ ..._user, avatar: _user.photo_200 })
+        .then(usr => {
+          setUser(usr)
+        })
+        .finally(() => {
+          setActivePopout(null)
+        })
     } catch (error) {
       console.error('error', error.message)
     }
@@ -65,12 +63,12 @@ const App = () => {
     })
   }, [])
 
-  // useEffect(() => {
-  //   // bridge.send("VKWebAppGetAuthToken", {"app_id": 6909581, "scope": "friends,status"});
-  // }, [])
+  useEffect(() => {
+    bridge.send('VKWebAppGetAuthToken', { app_id: 7964779, scope: 'friends,status' })
+  }, [])
 
   useEffect(() => {
-    // fetchUser()
+    fetchUser()
   }, [fetchUser])
 
   const AppContextValue = {
@@ -109,7 +107,7 @@ const App = () => {
         return (
           <TabbarItem
             key={page.name}
-            onClick={() => setActivePanel({ key: page.name, props: {} })}
+            onClick={() => setActivePanel({ key: page.name, props: { bidType: page.name } })}
             selected={activePanel.key === page.name}
             text={page.title}
           >
