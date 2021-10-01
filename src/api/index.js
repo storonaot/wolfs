@@ -1,4 +1,4 @@
-export const URL = 'https://gamer.super-app.studio/api'
+export const URL = 'https://76dd-46-216-112-219.ngrok.io'
 
 export const APP_ID = 7964162
 
@@ -17,15 +17,17 @@ const toJSON = response => {
 
 const defaultOptions = { headers: getHeaders() }
 
-export const signIn = ({ first_name, last_name, avatar }) =>
+export const signIn = ({ first_name, last_name, avatar }) => {
   fetch(`${URL}/sign-in`, {
     ...defaultOptions,
     method: 'POST',
     body: JSON.stringify({ first_name, last_name, avatar }),
   }).then(toJSON)
+}
 
-export const getUser = () =>
-  fetch(`${URL}/sign-in`, {
+export const getAds = ({ type }) =>
+  fetch(`${URL}/api/ads/${type}`, {
     ...defaultOptions,
+    mode: 'no-cors',
     method: 'GET',
   }).then(toJSON)
